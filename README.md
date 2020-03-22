@@ -1,4 +1,29 @@
-# OPDS Parser for node
+# Updated
+
+This a fork of [node-opds-parser](https://github.com/musubu/node-opds-parser)
+updated to include TypeScript definitions and work across environments, not just node.
+
+So far it's tested on node and nativescript, browser should work as well via webpack or similar.
+
+Note that I changed the api a bit because it was dated and prone to callback hell.
+
+Now there are 2 module level functions:
+
+`parseString` that takes opds string and returns a `Promise<Feed>`
+
+and
+
+`getFeedType` that takes `Feed` and returns `Promise<"navigation" | "acquisition">`. It can also be `Promise<null>` if `Feed` is invalid.
+
+`Feed` and `Entry` types are exported as well.
+
+Another note: stream usage is disabled for compatibility with nativescript. I might re-enable that in the future.
+
+## Original README
+
+------------------------------------------------------------------------
+
+## OPDS Parser for node
 
 Parses OPDS Catalog Feed to JSON using Isaac Schlueter's sax parser.
 
@@ -133,11 +158,11 @@ Sample navigation feed from opds-spec.org (http://opds-spec.org/specs/opds-catal
     <?xml version="1.0" encoding="UTF-8"?>
     <feed xmlns="http://www.w3.org/2005/Atom">
       <id>urn:uuid:2853dacf-ed79-42f5-8e8a-a7bb3d1ae6a2</id>
-      <link rel="self"  
-            href="/opds-catalogs/root.xml" 
+      <link rel="self"
+            href="/opds-catalogs/root.xml"
             type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
-      <link rel="start" 
-            href="/opds-catalogs/root.xml" 
+      <link rel="start"
+            href="/opds-catalogs/root.xml"
             type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
       <title>OPDS Catalog Root Example</title>
       <updated>2010-01-10T10:03:10Z</updated>
@@ -145,10 +170,10 @@ Sample navigation feed from opds-spec.org (http://opds-spec.org/specs/opds-catal
         <name>Spec Writer</name>
         <uri>http://opds-spec.org</uri>
       </author>
- 
+
       <entry>
         <title>Popular Publications</title>
-        <link rel="http://opds-spec.org/sort/popular" 
+        <link rel="http://opds-spec.org/sort/popular"
               href="/opds-catalogs/popular.xml"
               type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
         <updated>2010-01-10T10:01:01Z</updated>
@@ -157,7 +182,7 @@ Sample navigation feed from opds-spec.org (http://opds-spec.org/specs/opds-catal
       </entry>
       <entry>
         <title>New Publications</title>
-        <link rel="http://opds-spec.org/sort/new" 
+        <link rel="http://opds-spec.org/sort/new"
               href="/opds-catalogs/new.xml"
               type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
         <updated>2010-01-10T10:02:00Z</updated>
@@ -166,7 +191,7 @@ Sample navigation feed from opds-spec.org (http://opds-spec.org/specs/opds-catal
       </entry>
       <entry>
         <title>Unpopular Publications</title>
-        <link rel="subsection" 
+        <link rel="subsection"
               href="/opds-catalogs/unpopular.xml"
               type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
         <updated>2010-01-10T10:01:00Z</updated>
@@ -188,22 +213,22 @@ Feed above will be parsed to JSON below.
       title: 'OPDS Catalog Root Example',
       updated: '2010-01-10T10:03:10.000Z',
       author: { name: 'Spec Writer', email: null, uri: 'http://opds-spec.org' },
-      links: 
-       [ { '@': 
+      links:
+       [ { '@':
             { rel: 'self',
               href: '/opds-catalogs/root.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=navigation' } },
-         { '@': 
+         { '@':
             { rel: 'start',
               href: '/opds-catalogs/root.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=navigation' } } ],
       icon: null,
-      entries: 
+      entries:
        [ { id: 'urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56e',
            title: 'Popular Publications',
            updated: '2010-01-10T10:01:01.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { rel: 'http://opds-spec.org/sort/popular',
                    href: '/opds-catalogs/popular.xml',
                    type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } } ],
@@ -222,8 +247,8 @@ Feed above will be parsed to JSON below.
          { id: 'urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56c',
            title: 'New Publications',
            updated: '2010-01-10T10:02:00.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { rel: 'http://opds-spec.org/sort/new',
                    href: '/opds-catalogs/new.xml',
                    type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } } ],
@@ -242,8 +267,8 @@ Feed above will be parsed to JSON below.
          { id: 'urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56d',
            title: 'Unpopular Publications',
            updated: '2010-01-10T10:01:00.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { rel: 'subsection',
                    href: '/opds-catalogs/unpopular.xml',
                    type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } } ],
@@ -262,8 +287,8 @@ Feed above will be parsed to JSON below.
          { id: 'urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56e',
            title: 'Relative link test entry',
            updated: '2010-01-10T10:02:00.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { href: '/somewhere/test.opds',
                    rel: 'http://opds-spec.org/sort/popular',
                    type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } } ],
@@ -289,27 +314,27 @@ Sample acquisition feed from opds-spec.org (http://opds-spec.org/specs/opds-cata
           xmlns:dc="http://purl.org/dc/terms/"
           xmlns:opds="http://opds-spec.org/2010/catalog">
       <id>urn:uuid:433a5d6a-0b8c-4933-af65-4ca4f02763eb</id>
- 
-      <link rel="related" 
-            href="/opds-catalogs/vampire.farming.xml" 
+
+      <link rel="related"
+            href="/opds-catalogs/vampire.farming.xml"
             type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-      <link rel="self"    
+      <link rel="self"
             href="/opds-catalogs/unpopular.xml"
             type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-      <link rel="start"   
+      <link rel="start"
             href="/opds-catalogs/root.xml"
             type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
-      <link rel="up"      
+      <link rel="up"
             href="/opds-catalogs/root.xml"
             type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
- 
+
       <title>Unpopular Publications</title>
       <updated>2010-01-10T10:01:11Z</updated>
       <author>
         <name>Spec Writer</name>
         <uri>http://opds-spec.org</uri>
       </author>
- 
+
       <entry>
         <title>Bob, Son of Bob</title>
         <id>urn:uuid:6409a00b-7bf2-405e-826c-3fdff0fd0734</id>
@@ -325,26 +350,26 @@ Sample acquisition feed from opds-spec.org (http://opds-spec.org/specs/opds-cata
                   label="FICTION / Men's Adventure"/>
         <summary>The story of the son of the Bob and the gallant part he played in
           the lives of a man and a woman.</summary>
-        <link rel="http://opds-spec.org/image"     
+        <link rel="http://opds-spec.org/image"
               href="/covers/4561.lrg.png"
-              type="image/png"/> 
-        <link rel="http://opds-spec.org/image/thumbnail" 
+              type="image/png"/>
+        <link rel="http://opds-spec.org/image/thumbnail"
               href="/covers/4561.thmb.gif"
               type="image/gif"/>
- 
+
         <link rel="alternate"
               href="/opds-catalogs/entries/4571.complete.xml"
-              type="application/atom+xml;type=entry;profile=opds-catalog" 
+              type="application/atom+xml;type=entry;profile=opds-catalog"
               title="Complete Catalog Entry for Bob, Son of Bob"/>
- 
-        <link rel="http://opds-spec.org/acquisition" 
+
+        <link rel="http://opds-spec.org/acquisition"
               href="/content/free/4561.epub"
               type="application/epub+zip"/>
-        <link rel="http://opds-spec.org/acquisition" 
+        <link rel="http://opds-spec.org/acquisition"
               href="/content/free/4561.mobi"
               type="application/x-mobipocket-ebook"/>
       </entry>
- 
+
       <entry>
         <title>Modern Online Philately</title>
         <id>urn:uuid:7b595b0c-e15c-4755-bf9a-b7019f5c1dab</id>
@@ -368,11 +393,11 @@ Sample acquisition feed from opds-spec.org (http://opds-spec.org/specs/opds-cata
         <dc:issued>2009-10-01</dc:issued>
         <content type="text">The definitive reference for the web-curious
           philatelist.</content>
-        <link rel="http://opds-spec.org/image"     
+        <link rel="http://opds-spec.org/image"
               href="/covers/11241.lrg.jpg"
-              type="image/jpeg"/> 
- 
-        <link rel="http://opds-spec.org/acquisition/buy" 
+              type="image/jpeg"/>
+
+        <link rel="http://opds-spec.org/acquisition/buy"
               href="/content/buy/11241.epub"
               type="application/epub+zip">
           <opds:price currencycode="USD">18.99</opds:price>
@@ -383,7 +408,7 @@ Sample acquisition feed from opds-spec.org (http://opds-spec.org/specs/opds-cata
 
 Feed above will be parsed to JSON below.
 
-    { '@': 
+    { '@':
        [ { xmlns: 'http://www.w3.org/2005/Atom' },
          { 'xmlns:dc': 'http://purl.org/dc/terms/' },
          { 'xmlns:opds': 'http://opds-spec.org/2010/catalog' } ],
@@ -391,58 +416,58 @@ Feed above will be parsed to JSON below.
       title: 'Unpopular Publications',
       updated: '2010-01-10T10:01:11.000Z',
       author: { name: 'Spec Writer', email: null, uri: 'http://opds-spec.org' },
-      links: 
-       [ { '@': 
+      links:
+       [ { '@':
             { rel: 'related',
               href: '/opds-catalogs/vampire.farming.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } },
-         { '@': 
+         { '@':
             { rel: 'self',
               href: '/opds-catalogs/unpopular.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=acquisition' } },
-         { '@': 
+         { '@':
             { rel: 'start',
               href: '/opds-catalogs/root.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=navigation' } },
-         { '@': 
+         { '@':
             { rel: 'up',
               href: '/opds-catalogs/root.xml',
               type: 'application/atom+xml;profile=opds-catalog;kind=navigation' } } ],
       icon: null,
-      entries: 
+      entries:
        [ { id: 'urn:uuid:6409a00b-7bf2-405e-826c-3fdff0fd0734',
            title: 'Bob, Son of Bob',
            updated: '2010-01-10T10:01:11.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { rel: 'http://opds-spec.org/image',
                    href: '/covers/4561.lrg.png',
                    type: 'image/png' } },
-              { '@': 
+              { '@':
                  { rel: 'http://opds-spec.org/image/thumbnail',
                    href: '/covers/4561.thmb.gif',
                    type: 'image/gif' } },
-              { '@': 
+              { '@':
                  { rel: 'alternate',
                    href: '/opds-catalogs/entries/4571.complete.xml',
                    type: 'application/atom+xml;type=entry;profile=opds-catalog',
                    title: 'Complete Catalog Entry for Bob, Son of Bob' } },
-              { '@': 
+              { '@':
                  { rel: 'http://opds-spec.org/acquisition',
                    href: '/content/free/4561.epub',
                    type: 'application/epub+zip' } },
-              { '@': 
+              { '@':
                  { rel: 'http://opds-spec.org/acquisition',
                    href: '/content/free/4561.mobi',
                    type: 'application/x-mobipocket-ebook' } } ],
-           authors: 
+           authors:
             [ { name: 'Bob the Recursive',
                 email: null,
                 uri: 'http://opds-spec.org/authors/1285' } ],
            rights: null,
            summary: 'The story of the son of the Bob and the gallant part he played in the lives of a man and a woman.',
            content: null,
-           categories: 
+           categories:
             [ { term: 'FIC020000',
                 scheme: 'http://www.bisg.org/standards/bisac_subject/index.html',
                 label: 'FICTION / Men\'s Adventure' } ],
@@ -456,19 +481,19 @@ Feed above will be parsed to JSON below.
          { id: 'urn:uuid:7b595b0c-e15c-4755-bf9a-b7019f5c1dab',
            title: 'Modern Online Philately',
            updated: '2010-01-10T10:01:10.000Z',
-           links: 
-            [ { '@': 
+           links:
+            [ { '@':
                  { rel: 'http://opds-spec.org/image',
                    href: '/covers/11241.lrg.jpg',
                    type: 'image/jpeg' } },
-              { '@': 
+              { '@':
                  { rel: 'http://opds-spec.org/acquisition/buy',
                    href: '/content/buy/11241.epub',
                    type: 'application/epub+zip' },
-                'opds:price': 
+                'opds:price':
                  [ { '@': { currencycode: 'USD' }, '#': '18.99' },
                    { '@': { currencycode: 'GBP' }, '#': '11.99' } ] } ],
-           authors: 
+           authors:
             [ { name: 'Stampy McGee',
                 email: null,
                 uri: 'http://opds-spec.org/authors/21285' },
@@ -534,4 +559,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-

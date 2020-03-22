@@ -1,21 +1,43 @@
 {
-  "name": "opds-parser",
-  "author": "Musubu Inc. <dev@musubu.co.jp>",
-  "description": "OPDS catalog feed parser for node",
-  "version": "0.1.4",
+  "name": "opds-parser2",
+  "author": {
+    "name": "Ozymandias (Tomas Ravinskas)",
+    "email": "tomas.rav@gmail.com"
+  },
+  "description": "OPDS catalog feed parser updated with TS definitions and cross-env support",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/musubu/node-opds-parser"
+    "url": "https://github.com/OzymandiasTheGreat/opds-parser2"
   },
-  "keywords": ["opds", "parser", "xml", "atom", "syndication", "sax"],
+  "keywords": [
+    "opds",
+    "parser",
+    "xml",
+    "atom",
+    "syndication"
+  ],
+  "license": "MIT",
   "main": "./lib/opds-parser",
   "engines": {
     "node": ">=0.6.10"
   },
   "dependencies": {
-    "sax": ">=0.3.5",
-    "request": ">=2.9.153"
+    "events": "^3.1.0",
+    "sax": ">=0.6.0",
+    "url-parse": "^1.4.7"
   },
-  "devDependencies": {},
-  "scripts": {"test": "node test/run.js"}
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.9.2",
+    "@types/sax": "^1.2.1",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "mocha ./test/run.js",
+    "build": "tsc --declaration --target es2015 --module commonjs --moduleResolution node --lib es2015,es2018,dom --outDir ./lib ./src/opds-parser.ts"
+  }
 }
