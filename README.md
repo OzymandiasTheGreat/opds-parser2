@@ -1,5 +1,11 @@
 # Updated
 
+-------------------
+
+If you find this software useful, [consider becoming a patron](https://www.patreon.com/ozymandias)
+
+-------------------
+
 This a fork of [node-opds-parser](https://github.com/musubu/node-opds-parser)
 updated to include TypeScript definitions and work across environments, not just node.
 
